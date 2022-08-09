@@ -1,0 +1,125 @@
+Option Explicit
+' CAN MESSAGES MACROS 
+' Amps message
+#define AMPS_ROBOTEQ_MSG_ID 5
+#define AMPS_ROBOTEQ_MSG_LENGTH 4
+' Temperatures message
+#define TEMPS_ROBOTEQ_MSG_ID 6
+#define TEMPS_ROBOTEQ_MSG_LENGTH 6
+' RPMs message
+#define RPM_ROBOTEQ_MSG_ID 7
+#define RPM_ROBOTEQ_MSG_LENGTH 4
+' Error message
+#define ERR_ROBOTEQ_MSG_ID 8
+#define ERR_ROBOTEQ_MSG_LENGTH 3
+
+
+' Variables
+dim liftAmps as integer 
+dim swingAmps as integer
+dim liftDrvTemp as integer
+dim swingDrvTemp as integer
+dim liftMtrTemp as integer
+dim swingMtrTemp as integer
+dim liftRpm as integer
+dim swingRpm as integer
+dim errFlags as integer
+
+dim sendCnt as integer
+
+
+' Release brakes
+'SetCommand(_DSET, 1) ' lift brake
+'SetCommand(_DSET, 3) ' swing brake
+
+' initialize some stuff
+sendCnt = 0
+
+' initialize global user booleans
+'setcommand(_B, 1, 0) ' lift brake deactivated
+'setcommand(_B, 2, 0) ' swing brake deactivated
+' reset pin (float)
+SetCommand(_DRES, 1) ' lift brake
+SetCommand(_DRES, 3) ' swing brake
+
+
+
+top:
+
+if (sendCnt = 0) then
+' Get amps and send to CANBUS
+liftAmps = getvalue(_A,1)
+if (liftAmps < 0) then liftAmps = -liftAmps ' enforce positivity
+swingAmps = getvalue(_A,2)
+if (swingAmps < 0) then swingAmps = -swingAmps ' enforce positivity
+setcommand(_CS, 1, AMPS_ROBOTEQ_MSG_ID)
+setcommand(_CS, 3, liftAmps) ' LSB
+setcommand(_CS, 4, liftAmps>>8) ' MSB
+setcommand(_CS, 5, swingAmps) ' LSB
+setcommand(_CS, 6, swingAmps>>8) ' MSB
+setcommand(_CS, 2, AMPS_ROBOTEQ_MSG_LENGTH)
+sendCnt = sendCnt + 1
+
+elseif (sendCnt = 1) then
+' Get RPM and send to CANBUS
+liftRpm = getvalue(_BS, 1)
+swingRpm = getvalue(_BS, 2)
+if (liftRpm < 0) then liftRpm *= -1 ' enforce positivity
+if (swingRpm < 0) then swingRpm *= -1 ' enforce positivity
+setcommand(_CS, 1, RPM_ROBOTEQ_MSG_ID)
+setcommand(_CS, 3, liftRpm)
+setcommand(_CS, 4, liftRpm>>8)
+setcommand(_CS, 5, swingRpm)
+setcommand(_CS, 6, swingRpm>>8)
+setcommand(_CS, 2, RPM_ROBOTEQ_MSG_LENGTH)
+sendCnt = sendCnt + 1
+
+elseif (sendCnt = 2) then
+' Get temperatures and send to CANBUS
+liftDrvTemp = getvalue(_T,2)
+swingDrvTemp = getvalue(_T,3)
+liftMtrTemp = getvalue(_AI, 4)
+swingMtrTemp = getvalue(_AI, 2)
+setcommand(_CS, 1, TEMPS_ROBOTEQ_MSG_ID)
+setcommand(_CS, 3, liftDrvTemp)
+setcommand(_CS, 4, swingDrvTemp)
+setcommand(_CS, 5, liftMtrTemp)
+setcommand(_CS, 6, liftMtrTemp>>8)
+setcommand(_CS, 7, swingMtrTemp)
+setcommand(_CS, 8, swingMtrTemp>>8)
+setcommand(_CS, 2, TEMPS_ROBOTEQ_MSG_LENGTH)
+sendCnt = sendCnt + 1
+
+elseif (sendCnt = 3) then
+' Get error flags and send to CANBUS
+setcommand(_CS, 1, ERR_ROBOTEQ_MSG_ID)
+errFlags = getvalue(_FF,1)
+setcommand(_CS, 3, errFlags)
+errFlags = getvalue(_FM,1)
+setcommand(_CS, 4, errFlags)
+errFlags = getvalue(_FM,2)
+setcommand(_CS, 5, errFlags)
+setcommand(_CS, 2, ERR_ROBOTEQ_MSG_LENGTH)
+' Reset the count
+sendCnt = 0
+
+end if
+
+' check for brake status
+'if(getvalue(_B, 1)) then
+'setcommand(_DSET, 1) ' lift brake
+'else
+'setcommand(_DRES, 1) ' lift brake
+'end if 
+
+'if (getvalue(_B, 2)) then
+'setcommand(_DSET, 3) ' swing brake
+'else
+'setcommand(_DRES, 3) ' swing brake
+'end if
+
+' 20 ms iteration loop
+wait(20)
+
+
+goto top
