@@ -1,0 +1,125 @@
+{
+    "document" : {
+        "version" : 1,
+        "dateCreated" : "2021-09-30 17:48:34",
+        "sensorConnectVersion" : {
+            "major" : 13,
+            "minor" : 8,
+            "patch" : 5
+        },
+        "msclVersion" : {
+            "major" : 61,
+            "minor" : 1,
+            "patch" : 4
+        }
+    },
+    "device" : {
+        "name" : "3DM-CX5-15",
+        "modelNumber" : "6274-4260",
+        "serialNumber" : "6274.84563",
+        "firmwareVersion" : "1.1.76",
+        "deviceOptions" : "8g,300dps"
+    },
+    "state" : {
+        "0C08" : {
+            "name" : "IMU Message Format",
+            "commands" : [ "75650C07070801010500020518" ]
+        },
+        "0C0A" : {
+            "name" : "Estimation Filter Message Format",
+            "commands" : [ "75650C07070A01010500010623" ]
+        },
+        "0C11" : {
+            "name" : "Enable/Disable Device Continuous Data Stream",
+            "commands" : [ "75650C050511010101041A", "75650C050511010301061E" ]
+        },
+        "0C37" : {
+            "name" : "Accel Bias",
+            "commands" : [ "75650C0F0F37010000000000000000000000003C75" ]
+        },
+        "0C38" : {
+            "name" : "Gyro Bias",
+            "commands" : [ "75650C0F0F38010000000000000000000000003D83" ]
+        },
+        "0C3E" : {
+            "name" : "Coning and Sculling Enable",
+            "commands" : [ "75650C04043E01012E94" ]
+        },
+        "0C40" : {
+            "name" : "Change UART Baud Rate",
+            "commands" : [ "75650C07074001000708004478" ]
+        },
+        "0C50" : {
+            "name" : "Advanced Low-Pass Filter Settings",
+            "commands" : [ "75650C090950010401000000004E80", "75650C090950010501000000004F86", "75650C0909500117010000000061F2" ]
+        },
+        "0C51" : {
+            "name" : "Complementary Filter Settings",
+            "commands" : [ "75650C0D0D510101014120000041200000165E" ]
+        },
+        "0D11" : {
+            "name" : "Sensor to Vehicle Frame Rotation Euler Angles",
+            "commands" : [ "75650D0F0F11010000000080000000000000009772" ]
+        },
+        "0D14" : {
+            "name" : "Estimation Control Flags",
+            "commands" : [ "75650D05051401001F2549" ]
+        },
+        "0D18" : {
+            "name" : "Heading Update Control",
+            "commands" : [ "75650D04041801000827" ]
+        },
+        "0D19" : {
+            "name" : "Auto-Initialization Control",
+            "commands" : [ "75650D04041901010A2B" ]
+        },
+        "0D1A" : {
+            "name" : "Accelerometer Noise Standard Deviation",
+            "commands" : [ "75650D0F0F1A013DCCCCCD3DCCCCCD3DCCCCCD06BF" ]
+        },
+        "0D1B" : {
+            "name" : "Gyroscope Noise Standard Deviation",
+            "commands" : [ "75650D0F0F1B01390637BD390637BD390637BDBAC5" ]
+        },
+        "0D1D" : {
+            "name" : "Gyroscope Bias Model Parameters",
+            "commands" : [ "75650D1B1B1D010000000000000000000000003727C5AC3727C5AC3727C5ACA89B" ]
+        },
+        "0D20" : {
+            "name" : "Zero Angular Rate Update Control",
+            "commands" : [ "75650D08082001013C56A162AE5E" ]
+        },
+        "0D26" : {
+            "name" : "Set Reference Position",
+            "commands" : [ "75650D1C1C26010000000000000000000000000000000000000000000000000046B9" ]
+        },
+        "0D28" : {
+            "name" : "Gravity Noise Standard Deviation",
+            "commands" : [ "75650D0F0F28013DCCCCCD3DCCCCCD3DCCCCCD1483" ]
+        },
+        "0D41" : {
+            "name" : "Enable/Disable Measurements",
+            "commands" : [ "75650D05054101000134DF" ]
+        },
+        "0D44" : {
+            "name" : "Gravity Magnitude Error Adaptive Measurement",
+            "commands" : [ "75650D040444010236AD" ]
+        },
+        "0D4B" : {
+            "name" : "Pitch-Roll Aiding Control",
+            "commands" : [ "75650D04044B01013CC1" ]
+        },
+        "0D4E" : {
+            "name" : "Sensor to Vehicle Frame Rotation DCM",
+            "commands" : [ "75650D27274E013F8000000000000000000000000000003F8000000000000000000000000000003F800000C154" ]
+        },
+        "0D4F" : {
+            "name" : "Sensor to Vehicle Frame Rotation Quaternion",
+            "commands" : [ "75650D13134F013F8000008000000080000000800000009C36" ]
+        },
+        "7F10" : {
+            "name" : "Communication Mode",
+            "commands" : [ "75657F040410010173BC" ]
+        }
+    }
+}
